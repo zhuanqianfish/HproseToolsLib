@@ -1,0 +1,1 @@
+架构计划：hprose 实现数据层，nodejs + express/egg实现控制器，vue实现表现层
