@@ -1,0 +1,57 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+</head>
+<body>
+<script src="js/hprose.js"></script>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.slim.min.js"></script>
+
+<p>
+    <button id="btnSelectUser" type="button">查询User表</button> 
+    <button id="btnAddUser" type="button">增加User表记录</button>
+    <button id="btnUpdateUser" type="button">修改User表记录</button>
+    <button id="btnDelUser" type="button">删除User表</button>
+</p>
+
+<script type="text/javascript">
+    //架构计划 hprose 解决数据层，nodejs+egg解决控制器，vue解决表现层
+    var client = new hprose.HttpClient("http://hprosedemo.me/hproseApi.php");
+    console.log(client);
+    client.ready(function(dbClient) {   //dbClient 为远程服务代理对象
+        dbClient.hello('world', function(res) {     //测试hello
+            console.log(res);
+        }, { mode: hprose.Normal, sync: true });
+
+        $("#btnSelectUser").on('click', function(){ //查询当前表
+            dbClient.medoo.select('wy_user', '*', function(result){
+                console.log("查询user表状态");
+                console.log(result);
+            });
+        });
+
+        $("#btnDelUser").on('click', function(){    //删除
+            dbClient.medoo.delete('wy_user', {'username':'hproseTest'})
+                .then(function(result){
+                    console.log('删除成功！');
+                });
+        });
+
+        $("#btnAddUser").on('click', function(){    //增加
+            dbClient.medoo.insert('wy_user', {'username':'hproseTest', 'password': '123456', 'email':'hp@admin.com'},
+                function(result){
+                    console.log('插入成功！');
+                });
+        });
+
+        $("#btnUpdateUser").on('click', function(){    //修改
+            dbClient.medoo.update('wy_user', { 'password': '666666'}, {'username':'hproseTest'}).then(
+                function(result){
+                    console.log('修改成功！');
+            });
+        });
+        
+    });
+    
+</script>
+</body>
+</html>

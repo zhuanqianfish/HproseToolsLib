@@ -1,7 +1,6 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-    <title>远程实践版 Hprose js + Express + MedooPlus</title>
 </head>
 <body>
 <script src="js/hprose.js"></script>
@@ -19,7 +18,8 @@
 </div>
 <script type="text/javascript">
     //架构计划 hprose 解决数据层，nodejs+egg解决控制器，vue解决表现层
-    var serverUrl = 'http://122.114.125.10:3000'
+    var serverUrl = 'http://127.0.0.1:3000'
+
         $("#btnSelectUser").on('click', function(){ //查询当前表
            $.get(serverUrl+'/user/all',{},function(res){
                 res.forEach(element => {
